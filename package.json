@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "@eslint/markdown": "^7.3.0",
+    "eslint": "^9.36.0",
+    "globals": "^16.4.0"
+  }
+}
