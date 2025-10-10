@@ -1,154 +1,61 @@
-# HashMap Implementation Project
+# Binary Search Tree Project
 
-A JavaScript implementation of a HashMap data structure with dynamic resizing and collision handling.
+## Instructions
 
-## Overview
+1. Build a `Node` class/factory. It should have an attribute for the data it stores as well as its left and right children.
 
-Create a `HashMap` class or factory function that implements a hash table with the following specifications:
+2. Build a `Tree` class/factory which accepts an array when initialized. The `Tree` class should have a `root` attribute, which uses the return value of `buildTree` which you'll write next.
 
-- **Load Factor**: 0.75
-- **Initial Capacity**: 16
-- Automatic resizing when load factor is exceeded
+3. Write a `buildTree(array)` function that takes an array of data (e.g., `[1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]`) and turns it into a balanced binary tree full of `Node` objects appropriately placed (don't forget to sort and remove duplicates!). The `buildTree` function should return the level-0 root node.
 
-## Required Methods
+   **Tip:** If you would like to visualize your binary search tree, here is a `prettyPrint()` function that will `console.log` your tree in a structured format. This function will expect to receive the root of your tree as the value for the `node` parameter.
 
-### `hash(key)`
+   ```javascript
+   const prettyPrint = (node, prefix = "", isLeft = true) => {
+     if (node === null) {
+       return;
+     }
+     if (node.right !== null) {
+       prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+     }
+     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+     if (node.left !== null) {
+       prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+     }
+   };
+   ```
 
-Generates a hash code from a given key.
+4. Write `insert(value)` and `deleteItem(value)` functions that insert/delete the given value. You'll have to deal with several cases for delete, such as when a node has children or not. If you need additional resources, check out these two articles on [inserting](https://www.geeksforgeeks.org/insertion-in-binary-search-tree/?ref=lbp) and [deleting](https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/?ref=lbp), or this [video on BST inserting/removing](https://youtu.be/wcIRPqTR3Kc) with several visual examples.
 
-**Implementation Note**: Use the modulo operator (`%`) on each iteration to prevent integer overflow for long keys:
+   > **Note:** You may be tempted to implement these methods using the original input array used to build the tree, but it's important for the efficiency of these operations that you don't do this. If we refer back to the [Big O Cheatsheet](https://www.bigocheatsheet.com/), we'll see that binary search trees can insert/delete in `O(log n)` time, which is a significant performance boost over arrays for the same operations. To get this added efficiency, your implementation of these methods should traverse the tree and manipulate the nodes and their connections.
 
-```javascript
-function hash(key) {
-  let hashCode = 0;
+5. Write a `find(value)` function that returns the node with the given value.
 
-  const primeNumber = 31;
-  for (let i = 0; i < key.length; i++) {
-    hashCode = primeNumber * hashCode + key.charCodeAt(i);
-  }
+6. Write a `levelOrderForEach(callback)` function that accepts a callback function as its parameter. `levelOrderForEach` should traverse the tree in breadth-first level order and call the callback on each node as it traverses, passing the whole node as an argument, similarly to how `Array.prototype.forEach` might work for arrays. `levelOrderForEach` may be implemented using either iteration or recursion (try implementing both!). If no callback function is provided, [throw an Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw) reporting that a callback is required. **Tip:** You will want to use an array acting as a queue to keep track of all the child nodes that you have yet to traverse and to add new ones to the list ([video on level order traversal](https://www.youtube.com/watch?v=86g8jAQug04)).
 
-  return hashCode;
-}
-```
+7. Write `inOrderForEach(callback)`, `preOrderForEach(callback)`, and `postOrderForEach(callback)` functions that also accept a callback as a parameter. Each of these functions should traverse the tree in their respective depth-first order and pass each node to the provided callback. The functions should throw an Error if no callback is given as an argument, like with `levelOrderForEach`. The video [Binary Tree Traversal: Preorder, Inorder, Postorder](https://www.youtube.com/watch?v=gm8DUJJhmY4) explains the topic clearly.
 
-> **Important**: This implementation only handles keys of type `string`.
+8. Write a `height(value)` function that returns the height of the node containing the given value. Height is defined as the number of edges in the longest path from that node to a leaf node. If the value is not found in the tree, the function should return null.
 
-### `set(key, value)`
+9. Write a `depth(value)` function that returns the depth of the node containing the given value. Depth is defined as the number of edges in the path from that node to the root node. If the value is not found in the tree, the function should return null.
 
-Assigns a value to a key. If the key exists, overwrites the old value.
+10. Write an `isBalanced` function that checks if the tree is balanced. A binary tree is considered balanced if, for every node in the tree, the height difference between its left and right subtrees is no more than 1, and both the left and right subtrees are also balanced.
 
-- Handles collisions when different keys generate the same hash code
-- Triggers bucket growth when the load factor (0.75) is reached
-- Doubles capacity upon expansion
+    > **Pitfall with checking balance**
+    >
+    > A common mistake is only checking the height difference between the root's left and right children. That is not enough — you must check the balance condition for every node.
 
-### `get(key)`
+11. Write a `rebalance` function that rebalances an unbalanced tree. **Tip:** You'll want to use a traversal method to provide a new array to the `buildTree` function.
 
-Returns the value assigned to the given key, or `null` if not found.
+## Tie it all together
 
-### `has(key)`
+Write a driver script that does the following:
 
-Returns `true` if the key exists in the hash map, `false` otherwise.
-
-### `remove(key)`
-
-Removes the entry with the given key.
-
-- Returns `true` if the key was found and removed
-- Returns `false` if the key doesn't exist
-
-### `length()`
-
-Returns the total number of stored keys in the hash map.
-
-### `clear()`
-
-Removes all entries from the hash map.
-
-### `keys()`
-
-Returns an array containing all keys in the hash map.
-
-### `values()`
-
-Returns an array containing all values in the hash map.
-
-### `entries()`
-
-Returns an array of `[key, value]` pairs.
-
-**Example format**: `[[firstKey, firstValue], [secondKey, secondValue]]`
-
-> **Note**: Hash maps do not preserve insertion order. Keys and values may appear in a different order than they were inserted.
-
-## Testing Instructions
-
-### 1. Initial Setup
-
-```javascript
-const test = new HashMap(); // or HashMap() if using a factory
-```
-
-### 2. Populate the Hash Map
-
-Add entries until the load factor reaches 0.75 (full capacity):
-
-```javascript
-test.set("apple", "red");
-test.set("banana", "yellow");
-test.set("carrot", "orange");
-test.set("dog", "brown");
-test.set("elephant", "gray");
-test.set("frog", "green");
-test.set("grape", "purple");
-test.set("hat", "black");
-test.set("ice cream", "white");
-test.set("jacket", "blue");
-test.set("kite", "pink");
-test.set("lion", "golden");
-```
-
-### 3. Test Overwriting
-
-Overwrite existing nodes using `set(key, value)`. This should:
-
-- Update existing values only
-- Not change `length()`
-- Not change capacity
-
-### 4. Trigger Growth
-
-Add one more entry to exceed the load factor:
-
-```javascript
-test.set("moon", "silver");
-```
-
-This should:
-
-- Double the hash map's capacity
-- Drop load levels below the load factor
-- Redistribute entries evenly across expanded buckets
-
-### 5. Verify Expanded Hash Map
-
-- Test overwriting nodes again
-- Verify all methods still work correctly: `get(key)`, `has(key)`, `remove(key)`, `length()`, `clear()`, `keys()`, `values()`, and `entries()`
-
-## Extra Credit
-
-Create a `HashSet` class or factory function that:
-
-- Behaves like a `HashMap`
-- Contains only `keys` (no `values`)
-
-## Key Concepts
-
-### Hash Codes vs Keys
-
-- **Key**: Input to the hash function
-- **Hash Code**: Output used to access buckets
-- Never access buckets directly with keys; always use hash codes
-
-### Collisions
-
-Occur when two different keys generate the same hash code and map to the same bucket. Your implementation must handle these scenarios properly.
+1. Create a binary search tree from an array of random numbers < 100. You can create a function that returns an array of random numbers every time you call it if you wish.
+2. Confirm that the tree is balanced by calling `isBalanced`.
+3. Print out all elements in level, pre, post, and in order.
+4. Unbalance the tree by adding several numbers > 100.
+5. Confirm that the tree is unbalanced by calling `isBalanced`.
+6. Balance the tree by calling `rebalance`.
+7. Confirm that the tree is balanced by calling `isBalanced`.
+8. Print out all elements in level, pre, post, and in order.
