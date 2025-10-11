@@ -12,5 +12,30 @@ const arr = [
 
 const simpleArr = [0, 1, 2, 3, 4, 5, 6];
 
-const tree = new Tree(simpleArr);
+const otherArr = [50, 30, 70, 20, 40, 60, 80, 32, 65, 75, 85, 34, 36];
+
+const tree = new Tree(otherArr);
+tree.insert(33); // Should be inserted to the left of 34.
+tree.insert(33); // Should throw error due to duplicate.
+tree.insert(15);
+tree.insert(42);
+tree.insert(7);
+tree.insert(28);
+tree.insert(56);
+tree.insert(3);
+tree.insert(19);
+tree.insert(35);
+tree.insert(61);
+tree.insert(11);
+tree.insert(24);
+tree.insert(47);
+tree.insert(68);
+tree.insert(5);
+tree.insert(31);
+tree.insert(52);
+tree.insert(73);
+tree.insert(9);
+tree.insert(39);
+tree.insert(64);
+
 prettyPrint(tree.root);

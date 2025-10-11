@@ -21,6 +21,7 @@ export class Tree {
     return this.sortedArrayToBST(arr);
   }
 
+  // Sort array. (I could have used the built-in sort method, but this one is written by me)
   mergeSort(arr) {
     if (arr.length === 1) {
       return arr;
@@ -54,7 +55,6 @@ export class Tree {
     }
     if (left[i]) merged.push(...left.slice(i));
     else if (right[j]) merged.push(...right.slice(j));
-
     return merged;
   }
 
@@ -66,10 +66,12 @@ export class Tree {
     });
   }
 
+  // Passes array onto the recursive binary search tree builder.
   sortedArrayToBST(arr) {
     return this.sortedArrayToBSTRecur(arr, 0, arr.length - 1);
   }
 
+  // Recursively builds a binary search tree from an array.
   sortedArrayToBSTRecur(arr, start, end) {
     if (start > end) return null;
 
@@ -86,6 +88,37 @@ export class Tree {
     root.right = this.sortedArrayToBSTRecur(arr, mid + 1, end);
     return root;
   }
+
+  // Insert the given value.
+  insert(value) {
+    // Traverse the tree and create a Node with value in the appropriate position.
+    let current = this.root;
+    while (current) {
+      if (value < current.data) {
+        if (current.left) current = current.left;
+        else return (current.left = new Node(value));
+      } else if (value > current.data) {
+        if (current.right) current = current.right;
+        else return (current.right = new Node(value));
+      } else {
+        current = false;
+        console.error(
+          `"${value}" already exists in the tree, so it was not added.`
+        );
+      }
+    }
+  }
+
+  // Delete the given value.
+  deleteItem(value) {}
+
+  // Returns the Node with the given value.
+  find(value) {}
+
+  // Traverses the tree in breadth-first level order
+  // and call the callback on each node as it traverses,
+  // passing the whole node as an argument
+  levelOrderForEach(callback) {}
 }
 
 // This function will expect to receive the root of your tree as the value for the node parameter.
