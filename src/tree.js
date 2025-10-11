@@ -111,6 +111,7 @@ export class Tree {
 
   // Delete the given value.
   deleteItem(value) {
+    if (!this.find(value)) return null; // Value not found.
     let current = this.root;
     let parent;
     // Special case when the root node is deleted.
@@ -128,6 +129,20 @@ export class Tree {
       current.left = this.root.left;
       current.right = this.root.right;
       this.root = current;
+    } else {
+      while (value !== current.data) {
+        parent = current;
+        if (value > current.data && current.right) {
+          current = current.right;
+        } else if (value < current.data && current.left) {
+          current = current.left;
+        }
+      }
+      // At this point, current is the target.
+      // Update pointers.
+      if (current === parent.left) {
+      } else if (current === parent.right) {
+      }
     }
   }
 
