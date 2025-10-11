@@ -110,10 +110,40 @@ export class Tree {
   }
 
   // Delete the given value.
-  deleteItem(value) {}
+  deleteItem(value) {
+    let current = this.root;
+    let parent;
+    // Special case when the root node is deleted.
+    // Replace it with the lowest value on its right side.
+    if (value === current.data) {
+      current = current.right;
+      while (current.left) {
+        parent = current;
+        current = current.left;
+      }
+      // Update pointers.
+      if (current.right) {
+        parent.left = current.right;
+      } else parent.left = null;
+      current.left = this.root.left;
+      current.right = this.root.right;
+      this.root = current;
+    }
+  }
 
   // Returns the Node with the given value.
-  find(value) {}
+  find(value) {
+    let current = this.root;
+    while (current) {
+      if (value > current.data && current.right) {
+        current = current.right;
+      } else if (value < current.data && current.left) {
+        current = current.left;
+      } else if (value === current.data) {
+        return current;
+      } else return null; // Value not found.
+    }
+  }
 
   // Traverses the tree in breadth-first level order
   // and call the callback on each node as it traverses,

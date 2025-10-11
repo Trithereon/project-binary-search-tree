@@ -39,3 +39,5 @@ tree.insert(39);
 tree.insert(64);
 
 prettyPrint(tree.root);
+
+console.log(tree.find(64));
