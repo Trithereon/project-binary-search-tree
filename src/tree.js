@@ -129,20 +129,62 @@ export class Tree {
       current.left = this.root.left;
       current.right = this.root.right;
       this.root = current;
+    }
+    // else {
+    //   while (value !== current.data) {
+    //     parent = current;
+    //     if (value > current.data && current.right) {
+    //       current = current.right;
+    //     } else if (value < current.data && current.left) {
+    //       current = current.left;
+    //     }
+    //   }
+    //   // At this point, current is the target.
+    //   // Update pointers.
+    //   if (current === parent.left) {
+    //   } else if (current === parent.right) {
+    //   }
+    // }
+  }
+
+  deleteItem2(value) {
+    if (!this.find(value)) return null; // Value not found.
+    let target = this.root;
+    let tParent = this.root;
+    while (target.data !== value) {
+      if (value > target.data && target.right) {
+        tParent = target;
+        target = target.right;
+      } else if (value < target.data && target.left) {
+        tParent = target;
+        target = target.left;
+      }
+    }
+    let successor = target;
+    let sParent = tParent;
+    // At this point, target.data = value
+    // Also, tParent is the parent of target.data
+    if (target.right) {
+      sParent = successor;
+      successor = successor.right; // Go right.
+    }
+    while (successor.left) {
+      sParent = successor;
+      successor = successor.left; // Go left.
+    }
+    // Now I have my successor. I will unlink child.
+    if (successor.right) {
+      sParent.left = successor.right;
     } else {
-      while (value !== current.data) {
-        parent = current;
-        if (value > current.data && current.right) {
-          current = current.right;
-        } else if (value < current.data && current.left) {
-          current = current.left;
-        }
-      }
-      // At this point, current is the target.
-      // Update pointers.
-      if (current === parent.left) {
-      } else if (current === parent.right) {
-      }
+      sParent.left = null;
+    }
+    // Now I can replace the target value with successor value.
+    target.data = successor.data;
+
+    if (tParent.left === target) {
+      // do stuff
+    } else if (tParent.right === target) {
+      // At this point, successor is the left-most Node.
     }
   }
 

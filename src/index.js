@@ -40,4 +40,6 @@ tree.insert(64);
 
 prettyPrint(tree.root);
 
-console.log(tree.find(64));
+tree.deleteItem2(50);
+
+prettyPrint(tree.root);
