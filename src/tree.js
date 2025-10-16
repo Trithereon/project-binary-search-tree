@@ -111,44 +111,10 @@ export class Tree {
 
   // Delete the given value.
   deleteItem(value) {
-    if (!this.find(value)) return null; // Value not found.
-    let current = this.root;
-    let parent;
-    // Special case when the root node is deleted.
-    // Replace it with the lowest value on its right side.
-    if (value === current.data) {
-      current = current.right;
-      while (current.left) {
-        parent = current;
-        current = current.left;
-      }
-      // Update pointers.
-      if (current.right) {
-        parent.left = current.right;
-      } else parent.left = null;
-      current.left = this.root.left;
-      current.right = this.root.right;
-      this.root = current;
-    }
-    // else {
-    //   while (value !== current.data) {
-    //     parent = current;
-    //     if (value > current.data && current.right) {
-    //       current = current.right;
-    //     } else if (value < current.data && current.left) {
-    //       current = current.left;
-    //     }
-    //   }
-    //   // At this point, current is the target.
-    //   // Update pointers.
-    //   if (current === parent.left) {
-    //   } else if (current === parent.right) {
-    //   }
-    // }
-  }
+    const targetNode = this.find(value);
+    if (!targetNode) return null; // Value not found.
 
-  deleteItem2(value) {
-    if (!this.find(value)) return null; // Value not found.
+    // Traverse from root to the target Node, keeping track of the parent.
     let target = this.root;
     let tParent = this.root;
     while (target.data !== value) {
@@ -160,31 +126,50 @@ export class Tree {
         target = target.left;
       }
     }
-    let successor = target;
-    let sParent = tParent;
-    // At this point, target.data = value
-    // Also, tParent is the parent of target.data
-    if (target.right) {
-      sParent = successor;
-      successor = successor.right; // Go right.
-    }
-    while (successor.left) {
-      sParent = successor;
-      successor = successor.left; // Go left.
-    }
-    // Now I have my successor. I will unlink child.
-    if (successor.right) {
-      sParent.left = successor.right;
-    } else {
-      sParent.left = null;
-    }
-    // Now I can replace the target value with successor value.
-    target.data = successor.data;
+    // At this point,
+    // target = the target Node
+    // tParent = the target Node's parent
 
-    if (tParent.left === target) {
-      // do stuff
-    } else if (tParent.right === target) {
-      // At this point, successor is the left-most Node.
+    if (targetNode.left === null && targetNode.right === null) {
+      deleteLeafNode();
+    } else if (targetNode.left && targetNode.right) {
+      deleteNodeWithTwoChildren();
+    } else if (targetNode.left || targetNode.right) {
+      deleteNodeWithOneChild();
+    }
+
+    // Unlink target node from its parent.
+    function deleteLeafNode() {
+      if (tParent.right === target) tParent.right = null;
+      else if (tParent.left === target) tParent.left = null;
+    }
+
+    // Replace target with its inorder successor.
+    function deleteNodeWithTwoChildren() {
+      let successor = target.right;
+      let sParent = target;
+
+      while (successor.left) {
+        sParent = successor;
+        successor = successor.left; // Go left until the bottom of the tree.
+      }
+      // Now I have my successor. I will unlink child.
+      if (successor.right) {
+        sParent.left = successor.right;
+      } else {
+        sParent.left = null;
+      }
+      // Now I can replace the target value with successor value.
+      target.data = successor.data;
+    }
+
+    // Replace target with its child.
+    function deleteNodeWithOneChild() {
+      if (tParent.right === target) {
+        tParent.right = target.right || target.left; // Only the truthy one will be assigned.
+      } else if (tParent.left === target) {
+        tParent.left = target.right || target.left;
+      }
     }
   }
 

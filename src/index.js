@@ -37,9 +37,24 @@ tree.insert(73);
 tree.insert(9);
 tree.insert(39);
 tree.insert(64);
-
 prettyPrint(tree.root);
 
-tree.deleteItem2(50);
+// // Delete root node.
+// tree.deleteItem(50); // root node should be replaced with 52. WORKS.
+// prettyPrint(tree.root);
 
-prettyPrint(tree.root);
+// // Delete leaf node.
+// tree.deleteItem(5); // leaf node 5 should be deleted. WORKS.
+// prettyPrint(tree.root);
+
+// // Delete node with left child only.
+// tree.deleteItem(28); // node 28 should be replaced by 24. WORKS.
+// prettyPrint(tree.root);
+
+// // Delete node with right child only.
+// tree.deleteItem(42); // node 42 should be replaced by 47. WORKS.
+// prettyPrint(tree.root);
+
+// // Delete node with two children.
+// tree.deleteItem(36); // node 36 should be replaced by node 39. WORKS.
+// prettyPrint(tree.root);
