@@ -39,6 +39,12 @@ tree.insert(39);
 tree.insert(64);
 prettyPrint(tree.root);
 
+function logNodeData(node) {
+  return console.log(node.data);
+}
+
+tree.levelOrderForEach(logNodeData);
+
 // // Delete root node.
 // tree.deleteItem(50); // root node should be replaced with 52. WORKS.
 // prettyPrint(tree.root);

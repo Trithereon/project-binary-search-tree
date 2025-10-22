@@ -190,7 +190,34 @@ export class Tree {
   // Traverses the tree in breadth-first level order
   // and call the callback on each node as it traverses,
   // passing the whole node as an argument
-  levelOrderForEach(callback) {}
+  levelOrderForEach(callback) {
+    if (typeof callback !== "function")
+      throw new Error("Argument of levelOrderForEach() must be a function");
+    if (!this.root) throw new Error("Binary Search Tree is empty");
+
+    // Start at the root node.
+    const queue = [this.root];
+
+    function callbackRecur() {
+      // Base case: empty queue.
+      if (queue.length === 0) return;
+
+      // Dequeue first element of queue array and store in "node".
+      const node = queue.shift();
+
+      // Run callback on node.
+      callback(node);
+
+      // Enqueue children of node.
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+
+      // Recursively call.
+      callbackRecur();
+    }
+    // Initialize recursive function.
+    callbackRecur();
+  }
 }
 
 // This function will expect to receive the root of your tree as the value for the node parameter.
