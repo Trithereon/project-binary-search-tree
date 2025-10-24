@@ -46,7 +46,8 @@ function logNodeData(node) {
 
 // Test forEach functions
 // tree.levelOrderForEach(logNodeData);
-tree.inorderForEach(logNodeData);
+// tree.inorderForEach(logNodeData);
+tree.preorderForEach(logNodeData);
 
 // // Delete root node.
 // tree.deleteItem(50); // root node should be replaced with 52. WORKS.

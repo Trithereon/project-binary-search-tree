@@ -239,6 +239,17 @@ export class Tree {
   }
 
   // forEach node pre-order
+  preorderForEach(callback) {
+    function callbackRecur(node) {
+      if (node === null) return;
+
+      callback(node);
+      if (node.left) callbackRecur(node.left);
+      if (node.right) callbackRecur(node.right);
+    }
+
+    callbackRecur(this.root);
+  }
 
   // forEach node post-order
 }
