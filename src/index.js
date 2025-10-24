@@ -39,16 +39,22 @@ tree.insert(39);
 tree.insert(64);
 prettyPrint(tree.root);
 
+// // Test depth.
+// console.log(tree.depth(50)); // 0
+// console.log(tree.depth(32)); // 1
+// console.log(tree.depth(20)); // 2
+// console.log(tree.depth(5)); // 6
+
 // Print node data.
 function logNodeData(node) {
   console.log(node.data);
 }
 
-// Test forEach functions
+// // Test forEach functions
 // tree.levelOrderForEach(logNodeData);
 // tree.inorderForEach(logNodeData);
 // tree.preorderForEach(logNodeData);
-tree.postorderForEach(logNodeData);
+// tree.postorderForEach(logNodeData);
 
 // // Delete root node.
 // tree.deleteItem(50); // root node should be replaced with 52. WORKS.

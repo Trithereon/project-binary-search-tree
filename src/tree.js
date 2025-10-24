@@ -262,8 +262,23 @@ export class Tree {
   }
 
   // Returns the height of the node containing the given value.
-  height(value) {
-    //
+  height(value) {}
+
+  // Returns the depth of the node containing the given value.
+  depth(value) {
+    let counter = 0;
+    let current = this.root;
+    while (current) {
+      if (value > current.data && current.right) {
+        current = current.right;
+        counter++;
+      } else if (value < current.data && current.left) {
+        current = current.left;
+        counter++;
+      } else if (value === current.data) {
+        return counter;
+      } else return null; // Value not found.
+    }
   }
 }
 
