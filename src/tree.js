@@ -219,7 +219,7 @@ export class Tree {
     callbackRecur();
   }
 
-  // forEach node in-order
+  // forEach node in-order (left -> root -> right)
   inorderForEach(callback) {
     function callbackRecur(node) {
       if (node === null) return;
@@ -233,12 +233,11 @@ export class Tree {
       // Go right, if possible.
       if (node.right) callbackRecur(node.right);
     }
-
     // Initialize recursive function on root node.
     callbackRecur(this.root);
   }
 
-  // forEach node pre-order
+  // forEach node pre-order (root -> left -> right)
   preorderForEach(callback) {
     function callbackRecur(node) {
       if (node === null) return;
@@ -247,11 +246,25 @@ export class Tree {
       if (node.left) callbackRecur(node.left);
       if (node.right) callbackRecur(node.right);
     }
-
     callbackRecur(this.root);
   }
 
-  // forEach node post-order
+  // forEach node post-order (left -> right -> root)
+  postorderForEach(callback) {
+    function callbackRecur(node) {
+      if (node === null) return;
+
+      if (node.left) callbackRecur(node.left);
+      if (node.right) callbackRecur(node.right);
+      callback(node);
+    }
+    callbackRecur(this.root);
+  }
+
+  // Returns the height of the node containing the given value.
+  height(value) {
+    //
+  }
 }
 
 // This function will expect to receive the root of your tree as the value for the node parameter.
