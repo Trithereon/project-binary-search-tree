@@ -188,7 +188,7 @@ export class Tree {
   }
 
   // Traverses the tree in breadth-first level order
-  // and call the callback on each node as it traverses,
+  // and calls the callback on each node as it traverses,
   // passing the whole node as an argument
   levelOrderForEach(callback) {
     if (typeof callback !== "function")
@@ -218,6 +218,29 @@ export class Tree {
     // Initialize recursive function.
     callbackRecur();
   }
+
+  // forEach node in-order
+  inorderForEach(callback) {
+    function callbackRecur(node) {
+      if (node === null) return;
+
+      // Go left, if possible.
+      if (node.left) callbackRecur(node.left);
+
+      // Run callback on current node.
+      callback(node);
+
+      // Go right, if possible.
+      if (node.right) callbackRecur(node.right);
+    }
+
+    // Initialize recursive function on root node.
+    callbackRecur(this.root);
+  }
+
+  // forEach node pre-order
+
+  // forEach node post-order
 }
 
 // This function will expect to receive the root of your tree as the value for the node parameter.
