@@ -50,6 +50,10 @@ function logNodeData(node) {
   console.log(node.data);
 }
 
+// // Test height
+// const height = tree.height(50);
+// console.log(height);
+
 // // Test forEach functions
 // tree.levelOrderForEach(logNodeData);
 // tree.inorderForEach(logNodeData);

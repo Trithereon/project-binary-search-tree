@@ -264,19 +264,13 @@ export class Tree {
   // Returns the height of the node containing the given value.
   height(value) {
     const node = this.find(value);
-    let current = node;
-    let leftCounter = 0;
-    let rightCounter = 0;
-
-    while (current) {
-      if (current.left) {
-        // Or maybe instead of this iteration solution, maybe I should use recursion.
-        // My issue is that I'm stuck with finding a way
-        // to generate both possible paths down the tree, then return the longest of the two.
-        // Do I need two counters? leftCounter and rightCounter
-      }
+    function heightRecur(node) {
+      if (node === null) return 0;
+      if (node.right || node.left)
+        return 1 + Math.max(heightRecur(node.right), heightRecur(node.left));
+      else return 0;
     }
-    return counter;
+    return heightRecur(node);
   }
 
   // Returns the depth of the node containing the given value.
