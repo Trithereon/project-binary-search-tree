@@ -53,6 +53,11 @@ prettyPrint(tree.root);
 // Test if tree balanced or not.
 console.log(tree.isBalanced()); // False
 
+// Test rebalance()
+tree.rebalance();
+prettyPrint(tree.root);
+console.log(tree.isBalanced());
+
 // // Test depth.
 // console.log(tree.depth(50)); // 0
 // console.log(tree.depth(32)); // 1

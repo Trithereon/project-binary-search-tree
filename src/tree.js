@@ -303,10 +303,13 @@ export class Tree {
         // If only one child, callbackRecur() on that child.
         let left;
         let right;
-        if (!node.left) left = -1; // null is -1 height.
-        else left = this.height(node.left.data);
-        if (!node.right) right = -1;
-        else right = this.height(node.right.data);
+        if (!node.left) {
+          left = -1; // null is -1 height, since compared to leaf node, it is lower by 1.
+        } else left = this.height(node.left.data);
+        if (!node.right) {
+          right = -1;
+        } else right = this.height(node.right.data);
+        // If difference is greater than 1, the tree is not balanced.
         if (Math.abs(left - right) > 1) return false;
       }
     };
@@ -327,6 +330,13 @@ export class Tree {
     }
     // Initialize recursive function.
     return callbackRecur();
+  }
+
+  // Converts tree to array, then back into a balanced BST.
+  rebalance() {
+    let array = [];
+    this.inorderForEach((node) => array.push(node.data));
+    this.root = this.sortedArrayToBST(array);
   }
 }
 
