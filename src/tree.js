@@ -23,7 +23,8 @@ export class Tree {
 
   // Sort array. (I could have used the built-in sort method, but this one is written by me)
   mergeSort(arr) {
-    if (arr.length === 1) {
+    // On empty array, return empty array.
+    if (arr.length <= 1) {
       return arr;
     } else {
       let leftHalf = arr.slice(0, arr.length / 2);
@@ -299,11 +300,14 @@ export class Tree {
     if (!this.root) throw new Error("Binary Search Tree is empty");
     const callback = (node) => {
       if (node.left || node.right) {
-        if (node.left) {
-          const left = this.height(node.left.data);
-          const right = this.height(node.right.data) || 0;
-          if (Math.abs(left - right) > 1) return false;
-        }
+        // If only one child, callbackRecur() on that child.
+        let left;
+        let right;
+        if (!node.left) left = -1; // null is -1 height.
+        else left = this.height(node.left.data);
+        if (!node.right) right = -1;
+        else right = this.height(node.right.data);
+        if (Math.abs(left - right) > 1) return false;
       }
     };
     // Start at the root node.
