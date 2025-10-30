@@ -290,6 +290,40 @@ export class Tree {
       } else return null; // Value not found.
     }
   }
+
+  // Check whether for every node in the tree,
+  // the height difference between its left and right subtrees is no more than 1.
+  isBalanced() {
+    /* if left and right height diff > 1, return false.
+     else return true */
+    if (!this.root) throw new Error("Binary Search Tree is empty");
+    const callback = (node) => {
+      if (node.left || node.right) {
+        if (node.left) {
+          const left = this.height(node.left.data);
+          const right = this.height(node.right.data) || 0;
+          if (Math.abs(left - right) > 1) return false;
+        }
+      }
+    };
+    // Start at the root node.
+    const queue = [this.root];
+    function callbackRecur() {
+      // Base case: empty queue.
+      if (queue.length === 0) return true;
+      // Dequeue first element of queue array and store in "node".
+      const node = queue.shift();
+      // Run callback on node.
+      if (callback(node) === false) return false;
+      // Enqueue children of node.
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+      // Recursively call.
+      return callbackRecur();
+    }
+    // Initialize recursive function.
+    return callbackRecur();
+  }
 }
 
 // This function will expect to receive the root of your tree as the value for the node parameter.

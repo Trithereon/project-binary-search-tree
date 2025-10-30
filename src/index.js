@@ -14,7 +14,16 @@ const simpleArr = [0, 1, 2, 3, 4, 5, 6];
 
 const otherArr = [50, 30, 70, 20, 40, 60, 80, 32, 65, 75, 85, 34, 36];
 
+// Builds a balanced BST.
 const tree = new Tree(otherArr);
+
+// Print balanced tree.
+prettyPrint(tree.root);
+
+// Test if tree balanced or not.
+console.log(tree.isBalanced()); // True
+
+// Insert nodes, unbalancing the tree.
 tree.insert(33); // Should be inserted to the left of 34.
 tree.insert(33); // Should throw error due to duplicate.
 tree.insert(15);
@@ -37,7 +46,12 @@ tree.insert(73);
 tree.insert(9);
 tree.insert(39);
 tree.insert(64);
+
+// Print unbalanced tree.
 prettyPrint(tree.root);
+
+// Test if tree balanced or not.
+console.log(tree.isBalanced()); // False
 
 // // Test depth.
 // console.log(tree.depth(50)); // 0
